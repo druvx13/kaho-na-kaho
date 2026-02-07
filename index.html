@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kaho Na Kaho — Lyrics (Arabic + Romanization + Hindi/Urdu + English)</title>
+
+  <style>
+    :root {
+      --bg: #070a12;
+      --card: #10192a;
+      --text: #eaf1ff;
+      --muted: #a8b6d3;
+      --accent: #7aa2ff;
+      --accent2: #ffcf7a;
+      --border: rgba(255,255,255,0.08);
+      --danger: #ff6b6b;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: linear-gradient(180deg, #05070d, #070a12);
+      color: var(--text);
+      line-height: 1.65;
+      padding: 22px;
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    header {
+      padding: 18px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.6rem;
+    }
+
+    .subtitle {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    /* --- PLAYER --- */
+    .player-wrap {
+      margin-top: 16px;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,0.45);
+      padding: 14px;
+    }
+
+    .player-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .audio-player {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+
+    button {
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 9px 12px;
+      cursor: pointer;
+      font-size: 0.92rem;
+      transition: 0.15s ease;
+      user-select: none;
+    }
+
+    button:hover {
+      border-color: rgba(122,162,255,0.6);
+      background: rgba(122,162,255,0.10);
+    }
+
+    button.active {
+      border-color: rgba(255,207,122,0.7);
+      background: rgba(255,207,122,0.12);
+      color: #ffe8bd;
+    }
+
+    .danger {
+      border-color: rgba(255,107,107,0.5);
+    }
+
+    .danger:hover {
+      background: rgba(255,107,107,0.10);
+      border-color: rgba(255,107,107,0.8);
+    }
+
+    .timeline {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    .time {
+      font-variant-numeric: tabular-nums;
+      color: var(--muted);
+      font-size: 0.9rem;
+      min-width: 95px;
+      text-align: right;
+    }
+
+    .volume {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+      min-width: 220px;
+    }
+
+    .volume label {
+      color: var(--muted);
+      font-size: 0.9rem;
+      min-width: 60px;
+    }
+
+    .note {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    /* --- CONTENT --- */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    @media (min-width: 900px) {
+      .grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+    }
+
+    section h2 {
+      margin: 0 0 10px 0;
+      font-size: 1.15rem;
+      color: var(--accent);
+    }
+
+    section h3 {
+      margin: 12px 0 8px 0;
+      font-size: 1.02rem;
+      color: var(--accent2);
+    }
+
+    pre {
+      margin: 0;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      font-size: 1rem;
+      color: var(--text);
+    }
+
+    .arabic {
+      direction: rtl;
+      text-align: right;
+      font-size: 1.15rem;
+      font-family: "Amiri", "Scheherazade New", "Noto Naskh Arabic", serif;
+      line-height: 2.0;
+    }
+
+    .romanization {
+      font-family: "Times New Roman", serif;
+      font-size: 1.05rem;
+      color: #dbe6ff;
+    }
+
+    .translation {
+      font-size: 1.02rem;
+      color: #eaf0ff;
+    }
+
+    .license {
+      margin-top: 18px;
+      background: #0e1522;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+    }
+
+    .license h2 {
+      margin: 0 0 10px 0;
+      font-size: 1.1rem;
+      color: var(--accent2);
+    }
+
+    footer {
+      margin-top: 18px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    code {
+      color: #ffd68a;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>Kaho Na Kaho — Lyrics Page</h1>
+      <div class="subtitle">
+        Arabic + DIN 31635 Romanization + Hindi/Urdu (Latin) + English Translation
+      </div>
+
+      <div class="player-wrap">
+        <div class="player-title">
+          <span>🎵 Custom MP3 Player</span>
+          <span style="color:var(--muted); font-size:0.88rem;">
+            Repeat • Loop • Speed • Seek • Volume
+          </span>
+        </div>
+
+        <!-- MP3 FILE SOURCE -->
+        <!-- Put your mp3 file path below -->
+        <audio id="audio" preload="metadata">
+          <source src="kaho-na-kaho.mp3" type="audio/mpeg" />
+          Your browser does not support the audio element.
+        </audio>
+
+        <div class="audio-player">
+          <div class="timeline">
+            <input id="seek" type="range" min="0" max="100" value="0" step="0.1">
+            <div class="time" id="timeDisplay">00:00 / 00:00</div>
+          </div>
+
+          <div class="controls">
+            <button id="playBtn">▶ Play</button>
+            <button id="stopBtn" class="danger">⏹ Stop</button>
+
+            <button id="rewBtn">⏪ -10s</button>
+            <button id="fwdBtn">⏩ +10s</button>
+
+            <button id="repeatBtn">🔁 Repeat: Off</button>
+
+            <button id="speedBtn">⏱ Speed: 1.0x</button>
+
+            <div class="volume">
+              <label for="volume">🔊 Volume</label>
+              <input id="volume" type="range" min="0" max="1" value="0.85" step="0.01">
+            </div>
+          </div>
+
+          <div class="note">
+            Replace <code>kaho-na-kaho.mp3</code> with your own MP3 URL/path.
+            (Example: <code>/music/kaho-na-kaho.mp3</code>)
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="grid">
+      <section>
+        <h2>① Original Arabic</h2>
+        <pre class="arabic">تَمْلِي مَعَاكْ  
+وَلَوْ حَتَّى بَعِيدْ عَنِّي  
+فِي قَلْبِي هَوَاكْ  
+
+تَمْلِي مَعَاكْ  
+تَمْلِي فِي بَالِي وَقَلْبِي وَلَا بَنْسَاكْ  
+تَمْلِي وَاحِشْنِي لَوْ حَتَّى بِكُونْ وِيَاكْ  
+
+تَمْلِي حَبِيبِي مِحْتَاجْلَكْ  
+إِلَيَّ عَيْنِيَّ تَنْدَهْلَكْ  
+وَلَوْ حَوَالِيَا كُلّ الْكَوْنْ  
+بِكُونْ يَا حَبِيبِي مِحْتَاجْلَكْ</pre>
+      </section>
+
+      <section>
+        <h2>② DIN 31635 Romanization</h2>
+        <pre class="romanization">Tamli maʿāk,  
+Wa-law ḥattā baʿīd ʿannī,  
+Fī qalbī hawāk.  
+
+Tamli maʿāk,  
+Tamli fī bālī wa-qalbī wa-lā bansāk,  
+Tamli wāshišnī law ḥattā bikūn wiyāk.  
+
+Tamli ḥabībī miḥtājlak,  
+Ilayya ʿayniyya tandah lak,  
+Wa-law ḥawāliyā kull al-kawn,  
+Bikūn yā ḥabībī miḥtājlak.</pre>
+      </section>
+    </div>
+
+    <section style="margin-top:16px;">
+      <h2>③ English Translation</h2>
+      <pre class="translation">You’re always with me—  
+Even if you’re far from me,  
+My heart holds your love.  
+
+You’re always with me—  
+You fill my thoughts and my heart; I’ll never forget you.  
+You’re with me—I miss you, even when I’m with you.  
+
+My beloved, I need you.  
+My eyes long for you.  
+Even if the whole universe surrounds me,  
+I’d still need you, my love.</pre>
+    </section>
+
+    <section style="margin-top:16px;">
+      <h2>Hindi/Urdu Section (Transliterated & Translated)</h2>
+
+      <h3>Original (Latin Script)</h3>
+      <pre class="romanization">Tū hī jīne kā sahārā hai  
+Merī maujō̃ kā kinārā hai  
+Mere lie ye jahā̃ hai tū  
+Tū ne mere dil pe utārā hai  
+
+Chorus  
+Kaho na kaho  
+Ye ā̃kheṁ boltī haiṁ  
+O sanam, o sanam  
+
+O mere sanam  
+Mohabbat ke safar meṁ ye sahārā hai  
+Wafā ke sāhilō̃ kā ye kinārā hai</pre>
+
+      <h3>DIN 31635-style Romanization (Indic-adapted)</h3>
+      <pre class="romanization">Tū hī jīne kā sahārā hai,  
+Merī maujõ kā kinārā hai.  
+Mere lie ye jahā̃ hai tū,  
+Tū ne mere dil pe utārā hai.  
+
+Chorus  
+Kaho na kaho,  
+Ye ā̃kheṁ boltī haiṁ,  
+O sanam, o sanam!  
+
+O mere sanam,  
+Mohabbat ke safar mẽ ye sahārā hai,  
+Wafā ke sāhilõ kā ye kinārā hai.</pre>
+
+      <h3>English Translation</h3>
+      <pre class="translation">You alone are the support of my life,  
+The shore of my waves.  
+For me, this world is you—  
+You have descended upon my heart.  
+
+Chorus  
+Say it or don’t say it—  
+These eyes speak aloud:  
+O beloved, O beloved!  
+
+O my beloved,  
+In love’s journey, you are my refuge;  
+You are the shoreline of fidelity’s shores.</pre>
+    </section>
+
+    <div class="license">
+      <h2>License</h2>
+      <pre>LUCA FREE LICENSE  
+(Liberty Unrestricted for Creative Autonomy)  
+Version 1.0, February 2026  
+
+Copyright (C) 2026 Anonymous  
+
+Everyone is permitted to copy and distribute verbatim or modified copies of this license document, and changing it is allowed as long as the name is changed.  
+
+TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION  
+
+0. You just DO WHAT THE FUCK YOU WANT TO.  
+
+1. NO WARRANTY. THE WORK IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND.  
+   YOU USE IT AT YOUR OWN RISK. THE AUTHOR DISCLAIMS ALL LIABILITY FOR  
+   DAMAGES, LOSSES, OR ANY OTHER HARM ARISING FROM YOUR USE OF THE WORK,  
+   WHETHER ALLEGED AS A BREACH OF CONTRACT, TORTIOUS BEHAVIOR, OR OTHERWISE.  
+   THIS INCLUDES BUT IS NOT LIMITED TO DAMAGES FROM BUGS, DATA LOSS, OR  
+   YOUR OWN STUPIDITY.  
+
+2. IF ANY PART OF THIS LICENSE IS FOUND UNENFORCEABLE IN YOUR JURISDICTION,  
+   THE REST STILL APPLIES. THE CORE RULE REMAINS: DO WHAT THE FUCK YOU WANT TO.</pre>
+    </div>
+
+    <footer>
+      © 2026 — Lyrics page template (Custom MP3 player included)
+    </footer>
+  </div>
+
+  <script>
+    const audio = document.getElementById("audio");
+    const playBtn = document.getElementById("playBtn");
+    const stopBtn = document.getElementById("stopBtn");
+    const repeatBtn = document.getElementById("repeatBtn");
+    const speedBtn = document.getElementById("speedBtn");
+
+    const seek = document.getElementById("seek");
+    const volume = document.getElementById("volume");
+    const timeDisplay = document.getElementById("timeDisplay");
+
+    const rewBtn = document.getElementById("rewBtn");
+    const fwdBtn = document.getElementById("fwdBtn");
+
+    let repeatMode = false;
+
+    const speeds = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0];
+    let speedIndex = 2; // 1.0x default
+
+    function formatTime(sec) {
+      if (isNaN(sec)) return "00:00";
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60);
+      return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+    }
+
+    function updateTimeUI() {
+      const current = audio.currentTime;
+      const total = audio.duration;
+      timeDisplay.textContent = `${formatTime(current)} / ${formatTime(total)}`;
+    }
+
+    function updateSeekUI() {
+      if (!isNaN(audio.duration) && audio.duration > 0) {
+        seek.value = (audio.currentTime / audio.duration) * 100;
+      }
+    }
+
+    playBtn.addEventListener("click", () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.textContent = "⏸ Pause";
+      } else {
+        audio.pause();
+        playBtn.textContent = "▶ Play";
+      }
+    });
+
+    stopBtn.addEventListener("click", () => {
+      audio.pause();
+      audio.currentTime = 0;
+      playBtn.textContent = "▶ Play";
+      updateSeekUI();
+      updateTimeUI();
+    });
+
+    rewBtn.addEventListener("click", () => {
+      audio.currentTime = Math.max(0, audio.currentTime - 10);
+    });
+
+    fwdBtn.addEventListener("click", () => {
+      audio.currentTime = Math.min(audio.duration || 999999, audio.currentTime + 10);
+    });
+
+    repeatBtn.addEventListener("click", () => {
+      repeatMode = !repeatMode;
+      audio.loop = repeatMode;
+
+      if (repeatMode) {
+        repeatBtn.classList.add("active");
+        repeatBtn.textContent = "🔁 Repeat: On";
+      } else {
+        repeatBtn.classList.remove("active");
+        repeatBtn.textContent = "🔁 Repeat: Off";
+      }
+    });
+
+    speedBtn.addEventListener("click", () => {
+      speedIndex = (speedIndex + 1) % speeds.length;
+      audio.playbackRate = speeds[speedIndex];
+      speedBtn.textContent = `⏱ Speed: ${audio.playbackRate.toFixed(2)}x`.replace(".00", ".0");
+    });
+
+    seek.addEventListener("input", () => {
+      if (!isNaN(audio.duration)) {
+        audio.currentTime = (seek.value / 100) * audio.duration;
+      }
+    });
+
+    volume.addEventListener("input", () => {
+      audio.volume = volume.value;
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      updateSeekUI();
+      updateTimeUI();
+    });
+
+    audio.addEventListener("loadedmetadata", () => {
+      updateTimeUI();
+      updateSeekUI();
+    });
+
+    audio.addEventListener("ended", () => {
+      playBtn.textContent = "▶ Play";
+    });
+
+    // Default volume init
+    audio.volume = volume.value;
+  </script>
+</body>
+</html>
